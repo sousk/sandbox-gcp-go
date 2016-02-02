@@ -1,16 +1,43 @@
-package main
+package hello
 
 import (
-	"appengine"
-	"appengine/user"
-	"fmt"
+	// "appengine"
+	// "appengine/user"
+	// "fmt"
+	"html/template"
+	"io/ioutil"
 	"net/http"
 )
 
+var (
+	guestbookForm []byte
+	signTemplate  = template.Must(template.ParseFiles("guestbook.html"))
+)
+
 func init() {
-	http.HandleFunc("/", handler)
+	content, err := ioutil.ReadFile("guestbookform.html")
+	if err != nil {
+		panic(err)
+	}
+	guestbookForm = content
+
+	http.HandleFunc("/", root)
+	http.HandleFunc("/sign", sign)
 }
 
+func root(w http.ResponseWriter, r *http.Request) {
+	// fmt.Fprintf(w, guestbookForm)
+	w.Write(guestbookForm)
+}
+
+func sign(w http.ResponseWriter, r *http.Request) {
+	err := signTemplate.Execute(w, r.FormValue("content"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+/**
 func handler(w http.ResponseWriter, r *http.Request) {
 	// Create a new context
 	c := appengine.NewContext(r)
@@ -31,3 +58,4 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "Hello, %v !", u)
 }
+**/
