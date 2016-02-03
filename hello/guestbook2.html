@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Go Guestbook</title>
+  </head>
+  <body>
+    {{range .}}
+      <p><strong>{{.}}</strong> wrote: </p>
+      {{with .Author}}
+      {{else}}
+      <p>An anonymous person wrote:</p>
+      {{end}}
+      <hr>
+    {{end}}
+
+    <form action="/sign" method="post">
+      <div><textarea name="content" cols="60" rows="3"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+  </body>
+</html>
