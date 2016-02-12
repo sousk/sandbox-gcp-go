@@ -1,0 +1,31 @@
+<html>
+  <body>
+        <div id="root">
+          <hr>
+          <h2>Free Wi-Fi spots within 50km from:</h2>
+          <ul>
+            {{range .}}
+            <li>{{.Name}} - {{.Address}}</li>
+            {{end}}
+          </ul>
+          <hr>
+          <form action="/search" method="GET">
+            lat: <input type="text" placeholder="lat" name="lat">
+            long: <input type="text" placeholder="long" name="long">
+            keyword: <input type="text" placeholder="filter by keyword" name="keyword">
+            <button type="submit">Search Free Wi-Fi spot near by ..</button>
+          </form>
+          <div>
+            Examples:
+            <ul>
+              <li><a href="/search?lat=35.6604638&long=139.7292487">六本木ヒルズ付近</a></li>
+              <li><a href="/search?lat=35.771991&long=140.3906614">成田国際空港付近</a></li>
+            </ul>
+          </div>
+          <hr>
+          <form action="/setup" method="POST">
+            <button type="submit">Refresh (All of the data has been removed and inserted once again)</button>
+          </form>
+        </div>
+  </body>
+</html>

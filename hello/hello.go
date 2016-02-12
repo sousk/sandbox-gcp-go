@@ -4,7 +4,7 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
-	// "fmt"
+	"fmt"
 	"html/template"
 	"net/http"
 	"time"
@@ -44,6 +44,7 @@ func init() {
 
 	http.HandleFunc("/", root)
 	http.HandleFunc("/sign", sign)
+	http.HandleFunc("/hello", hello)
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
@@ -92,14 +93,14 @@ func sign(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-/**
-func handler(w http.ResponseWriter, r *http.Request) {
+func hello(w http.ResponseWriter, r *http.Request) {
 	// Create a new context
 	c := appengine.NewContext(r)
 	// Get the current user
 	// returns a pointer to a user.User if the user is already signed in
 	u := user.Current(c)
 
+	/**
 	if u == nil {
 		url, err := user.LoginURL(c, r.URL.String())
 		if err != nil {
@@ -110,7 +111,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusFound)
 		return
 	}
+	**/
 
 	fmt.Fprintf(w, "Hello, %v !", u)
 }
-**/
